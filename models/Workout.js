@@ -29,26 +29,6 @@ Workout.init(
       type: DataTypes.DATE,
       allowNull: false,
     },
-    sets: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    reps: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    duration: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    weight: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
-    },
-    nutrition: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
     notes: {
       type: DataTypes.STRING,
       allowNull: false,
