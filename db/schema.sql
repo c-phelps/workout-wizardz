@@ -1,2 +1,2 @@
-DROP DATABASE IF EXISTS workout-wizardz.db
-CREATE DATABASE workout-wizardz.db
+DROP DATABASE IF EXISTS workoutWizardzDb
+CREATE DATABASE workoutWizardzDb
