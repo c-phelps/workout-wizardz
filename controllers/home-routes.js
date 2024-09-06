@@ -3,15 +3,8 @@ const { User } = require("../models");
 
 router.get("/", async (req, res) => {
   try {
-    const userData = await User.findAll({
-      attributes: { exclude: ["password"] },
-      order: [["name", "ASC"]],
-    });
-
-    const users = userData.map((user) => user.get({ plain: true }));
-
     res.render("homepage", {
-      users,
+      is_homepage: true,
       logged_in: req.session.logged_in,
     });
   } catch (err) {
