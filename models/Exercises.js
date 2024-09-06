@@ -1,6 +1,8 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connections");
 
+class Exercises extends Model{}
+
 Exercises.init( // ID PK, MuscleGroup, Description
   {
     id: {
@@ -12,20 +14,7 @@ Exercises.init( // ID PK, MuscleGroup, Description
     MuscleGroup: {
       type: DataTypes.STRING,
       allowNull: false,
-      references: {
-        model: "Exercises",
-        key: "id",
-      },
     },
-    userId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: "Exercises",
-        key: "id",
-      },
-    },
-    
     Description: {
       type: DataTypes.STRING,
       allowNull: false,
