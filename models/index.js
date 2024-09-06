@@ -2,3 +2,25 @@ const User = require("./User.js");
 const Exercise = require("./Exercise.js");
 const Workout = require("./Workout.js");
 const WorkoutExercises = require("./WorkoutExercises.js");
+
+// User has many Workouts
+User.hasMany(Workout, {
+  foreignKey: "userId",
+  onDelete: "CASCADE",
+});
+// Workouts belong to Users
+Workout.belongsTo(User, {
+  foreignKey: "userId",
+});
+// Workouts belong to many Exercises through WorkoutExercises, fk = workout_id
+Workout.belongsToMany(Exercise, { through: "WorkoutExercises", foreignKey: "workout_id" });
+// Exercises belong to many Workouts through WorkoutExercises fk = exercise_id
+Exercise.belongsToMany(Workout, { through: "WorkoutExercises", foreginKey: "exercise_id" });
+// See ERD for visual relationship data: #19
+
+module.exports = {
+  User,
+  Workout,
+  Exercise,
+  WorkoutExercises,
+};
