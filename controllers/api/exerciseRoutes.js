@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { Exercise } = require('../../models');
 const withAuth = require('../utils/auth');
 
-router.get('/exercise/:musclegroup', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
       const exerciseData = await Exercise.findAll({group: 'musclegroup'});
   
