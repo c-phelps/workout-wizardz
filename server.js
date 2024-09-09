@@ -8,7 +8,7 @@ require("dotenv").config();
 
 // require our routes/connection and helpers
 const routes = require("./controllers");
-const sequelize = require("./config/connection");
+const sequelize = require("./config/connections");
 const helpers = require("./utils/helpers");
 
 // initialize the app and set the port
@@ -43,12 +43,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
-//  
+//
 app.use(routes);
 
-// sync sequelize 
+// sync sequelize
 sequelize.sync({ force: false }).then(() => {
-    // set the server to listen on the port
+  // set the server to listen on the port
   app.listen(PORT, () =>
     console.log(`\nServer running on port ${PORT}. Visit http://localhost:${PORT} and get started with Workout Wizard!`)
   );
