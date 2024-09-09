@@ -1,10 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { Workout } = require('../models'); 
+const { Workout, WorkoutExercises } = require('../models'); 
+
 
 router.get('/', async (req, res) => {
     try {
-        const workouts = await Workout.findAll();
+        const workouts = await Workout.findAll({
+            include: WorkoutExercises 
+        });
         res.json(workouts);
     } catch (error) {
         console.error('Error fetching workouts:', error);
@@ -12,10 +15,13 @@ router.get('/', async (req, res) => {
     }
 });
 
+
 router.get('/:id', async (req, res) => {
     const { id } = req.params;
     try {
-        const workout = await Workout.findByPk(id);
+        const workout = await Workout.findByPk(id, {
+            include: WorkoutExercises 
+        });
         if (!workout) {
             return res.status(404).json({ error: 'Workout not found' });
         }
