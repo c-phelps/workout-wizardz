@@ -15,12 +15,13 @@ Exercises.init( // ID PK, MuscleGroup, Description
       type: DataTypes.STRING,
       allowNull: false,
     },
+    Name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     Description: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        len: [0, 50],
-      },
     },
   },
   {
