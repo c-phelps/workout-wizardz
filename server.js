@@ -10,6 +10,7 @@ require("dotenv").config();
 const routes = require("./controllers");
 const sequelize = require("./config/connections");
 const helpers = require("./utils/helpers");
+const secret = process.env.SECRET || "adaeaxaefagragr42fwsaf2";
 
 // initialize the app and set the port
 const app = express();
@@ -17,7 +18,7 @@ const PORT = process.env.PORT || 3001;
 
 // set the session variables
 const sess = {
-  secret: process.env.SECRET,
+  secret: secret,
   cookie: {
     // Stored in milliseconds
     maxAge: 24 * 60 * 60 * 1000, // expires after 1 day
