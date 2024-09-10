@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Workout, WorkoutExercises } = require("../../models");
+const { User, Workout, WorkoutExercises, Exercise } = require("../../models");
 
 router.get("/", async (req, res) => {
   try {
@@ -53,11 +53,47 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+// workout creation
 router.post("/", async (req, res) => {
-  const newWorkoutData = req.body;
-
   try {
-    const newWorkout = await Workout.create(newWorkoutData);
+    // retrieve the date and array of selected exercises
+    const { date, exercises } = req.body;
+    // set the username to the logged in user - test user for testing data
+    // ---------------------------------------------------------
+    const user_name = req.session.user_id; //
+    // const user_name = "testuser"; //
+    // ---------------------------------------------------------
+    // find the ID for the user based off of the name
+    const userData = await User.findOne({ where: { username: user_name } });
+    const user = userData.get({ plain: true });
+    console.log(user.id);
+    // create a new workout with the information:
+    // date from date/time picker
+    // user from current user
+
+    // USE TEST USER UNTIL WE HAVE LOGIN THEN REVERT
+    const newWorkout = await Workout.create({
+      date: date,
+      user_id: user.id,
+    });
+
+    const exerciseIdsArray = [];
+    // loop through exercises and each current exercise will be exercise
+    for (const exercise of exercises) {
+      // find exactly one exercise where Name = current exercise
+      const exerciseData = await Exercise.findOne({ where: { Name: exercise } });
+      // retrieve the id as plain data and destructure it
+      const { id } = exerciseData.get({ plain: true });
+      // push the values to the array of ids if exercise is not duplicated
+      if (!exerciseIdsArray.includes(id)) {
+        exerciseIdsArray.push(id);
+      }
+    }
+    // if exercisesIdsArray exists and has values,
+    // create associated exercises in the junction table
+    if (exerciseIdsArray.length > 0) {
+      await newWorkout.addExercises(exerciseIdsArray); //add exercises should add these records to the workoutexercises table
+    }
 
     res.status(201).json(newWorkout);
   } catch (error) {

@@ -11,15 +11,7 @@ Workout.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    exerciseId: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: "exercise",
-        key: "id",
-      },
-    },
-    userId: {
+    user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
@@ -32,11 +24,8 @@ Workout.init(
       allowNull: false,
     },
     notes: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [0, 50],
-      },
+      type: DataTypes.TEXT,
+      allowNull: true,
     },
   },
   {
