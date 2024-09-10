@@ -1,14 +1,34 @@
-<h2>Select Date:</h2>
-<input type="date" id="selectDate" />
-
-<h2>Muscle Groups:</h2>
-<ul>
-  {{#foreach musclegroup}}
-    <li>{{this}}</li>
-  {{/each}}
-</ul>
-
-<h2>Currently Selected Exercises:</h2>
-<ul id="selectedExercises">
-  <!-- Display currently selected exercises here -->
-</ul>
+<div class="container m-6">
+  <div class="title is-4">Select Date:</div>
+  <div class="columns is-centered">
+    <div class="column is-half">
+      <div class="field">
+        <label class="label">Select Date:</label>
+        <div class="control">
+          <input type="date" id="select-date" class="input is-centered" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="title is-4">Muscle Groups:</div>
+  <div class="columns is-multiline">
+    {{#each muscleGroups}}
+      <div class="column is-one-quarter">
+        <button class="muscle-group button is-warning is-fullwidth" data-muscle-group="{{this}}">
+          {{this}}
+        </button>
+      </div>
+    {{/each}}
+  </div>
+  <div class="title is-4">Exercises for selected muscle group:</div>
+  <div class="columns is-multiline" id="exercises-list"></div>
+  <div class="columns has-text-white" id="exercise-data"></div>
+  <div class="title is-4">Your exercises for this workout:</div>
+  <div class="columns has-text-white is-multiline" id="selected-exercises"></div>
+  <div class="columns is-centered">
+    <div class="column is-three-quarters">
+      <button id="btn-save" class="button is-success is-fullwidth is-hidden">Save your workout!</button>
+    </div>
+  </div>
+  <script src="/js/exercise.js"></script>
+</div>
