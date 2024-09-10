@@ -1,28 +1,18 @@
 // Import necessary modules
-const { queryInterface, Sequelize } = require('sequelize'); // Example with Sequelize
-const db = require('../models'); // Import your models if needed
+const sequelize = require('../config/connection');
+const { exerciseData} = require('../models');
 
-module.exports = {
-  up: async () => {
-    // Seed data logic
-    await queryInterface.bulkInsert('Users', [
-      {
-        name: 'Alice Smith',
-        email: 'alice@example.com',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-      {
-        name: 'Bob Johnson',
-        email: 'bob@example.com',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      },
-    ], {});
-  },
-  down: async () => {
-    // Logic to revert the seeding
-    await queryInterface.bulkDelete('Users', null, {});
-  },
+const exerciseData = require('./userData.json');
+
+const seedDatabase = async () => {
+  await sequelize.sync({ force: true });
+
+  await User.bulkCreate(exerciseData, {
+    individualHooks: true,
+    returning: true,
+  });
+
+  process.exit(0);
 };
 
+seedDatabase();
