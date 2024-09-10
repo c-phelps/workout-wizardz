@@ -1,0 +1,14 @@
+<h2>Select Date:</h2>
+<input type="date" id="selectDate" />
+
+<h2>Muscle Groups:</h2>
+<ul>
+  {{#foreach musclegroup}}
+    <li>{{this}}</li>
+  {{/each}}
+</ul>
+
+<h2>Currently Selected Exercises:</h2>
+<ul id="selectedExercises">
+  <!-- Display currently selected exercises here -->
+</ul>

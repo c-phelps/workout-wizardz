@@ -1,9 +1,10 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/connections");
 
-class Exercises extends Model{}
+class Exercises extends Model {}
 
-Exercises.init( // ID PK, MuscleGroup, Description
+Exercises.init(
+  // ID PK, MuscleGroup, Description
   {
     id: {
       type: DataTypes.INTEGER,
@@ -15,12 +16,13 @@ Exercises.init( // ID PK, MuscleGroup, Description
       type: DataTypes.STRING,
       allowNull: false,
     },
+    Name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     Description: {
       type: DataTypes.STRING,
       allowNull: false,
-      validate: {
-        len: [0, 50],
-      },
     },
   },
   {
@@ -28,7 +30,7 @@ Exercises.init( // ID PK, MuscleGroup, Description
     timestamps: false,
     freezeTableName: true,
     underscored: true,
-    modelName: "Exercises",
+    modelName: "exercise",
   }
 );
 
