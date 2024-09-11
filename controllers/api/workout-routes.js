@@ -1,14 +1,26 @@
 const express = require("express");
 const router = express.Router();
 const { User, Workout, WorkoutExercises, Exercise } = require("../../models");
+const dayjs = require("dayjs");
 
 router.get("/", async (req, res) => {
   try {
-    const workouts = await Workout.findAll({
-      include: WorkoutExercises,
-    });
+    // const user_name = req.session.user_id; //
+    const user_name = "testuser"; //
+    // ---------------------------------------------------------
+    // find the ID for the user based off of the name
+    const userData = await User.findOne({ where: { username: user_name } });
+    const { id } = userData.get({ plain: true });
 
-    res.json(workouts);
+    const workoutData = await Workout.findAll({
+      include: [{ model: Exercise, as: "exercises" }],
+      where: {
+        user_id: id,
+      },
+    });
+    const workouts = workoutData.map((workout) => workout.get({ plain: true }));
+    res.render("workout", { workouts, user: user_name });
+    // res.json(workouts);
   } catch (error) {
     console.error("Error fetching workouts:", error);
     res.status(500).json({ error: "An error occurred while fetching workouts" });
@@ -19,7 +31,7 @@ router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const workout = await Workout.findByPk(id, {
-      include: WorkoutExercises,
+      include: [{ model: Exercise, as: "exercises" }],
     });
 
     if (!workout) {
@@ -43,7 +55,6 @@ router.put("/:id", async (req, res) => {
     if (!workout) {
       return res.status(404).json({ error: "Workout not found" });
     }
-
     await workout.update(updatedWorkoutData);
 
     res.json({ message: "Workout updated successfully" });
@@ -58,25 +69,23 @@ router.post("/", async (req, res) => {
   try {
     // retrieve the date and array of selected exercises
     const { date, exercises } = req.body;
+    const formattedDate = dayjs(date).format("MM/DD/YYYY");
     // set the username to the logged in user - test user for testing data
     // ---------------------------------------------------------
-    const user_name = req.session.user_id; //
-    // const user_name = "testuser"; //
+    // const user_name = req.session.user_id; //
+    const user_name = "testuser"; //
     // ---------------------------------------------------------
     // find the ID for the user based off of the name
     const userData = await User.findOne({ where: { username: user_name } });
-    const user = userData.get({ plain: true });
-    console.log(user.id);
+    const { id } = userData.get({ plain: true });
     // create a new workout with the information:
     // date from date/time picker
     // user from current user
-
     // USE TEST USER UNTIL WE HAVE LOGIN THEN REVERT
     const newWorkout = await Workout.create({
-      date: date,
-      user_id: user.id,
+      date: formattedDate,
+      user_id: id,
     });
-
     const exerciseIdsArray = [];
     // loop through exercises and each current exercise will be exercise
     for (const exercise of exercises) {

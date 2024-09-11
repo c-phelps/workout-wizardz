@@ -63,7 +63,7 @@ $(document).ready(function () {
           <header class="card-header">
             <p class="card-header-title is-centered has-text-link">${exercises.MuscleGroup}</p>
           </header>
-          <div class="card-content has-text-weight-bold has-text-white has-text-centered" data-selected-exercise='${exercises.Name}'>
+          <div class="card-content has-text-weight-bold has-text-centered" data-selected-exercise='${exercises.Name}'>
           ${exercises.Name}
           </div>
           <footer class="card-footer">
