@@ -4,21 +4,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Workout Wizards</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
 
   <body>
     <header>
-      <h1>Welcome to Workout Wizards</h1>
+      <h1 class="title is-1 has-text-centered">Welcome to Workout Wizards</h1>
     </header>
-    {{#if boolHomepage}}
-      <nav>
-        buttons
+    {{#unless boolHomepage}}
+      <nav class="navbar is-warning" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <i class="fa-solid fa-dumbbell fa-4x"></i>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu" id="workouts">
+          <div class="navbar-end">
+            <div class="navbar-item">
+              <div class="buttons">
+                <a class="button is-dark" id="btn-home">
+                  Home
+                </a>
+                <a class="button is-dark" id="btn-workout">
+                  <strong>Workouts</strong>
+                </a>
+                <a class="button is-dark" id="btn-logout">
+                  Logout
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       </nav>
-    {{/if}}
+    {{/unless}}
     {{{body}}}
   </body>
-  <script></script>
+  <script src="/js/main.js"></script>
 </html>

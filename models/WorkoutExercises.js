@@ -13,7 +13,7 @@ WorkoutExercises.init(
     },
     workout_id: {
       type: DataTypes.INTEGER,
-      refrences: {
+      references: {
         model: "workout",
         key: "id",
       },

@@ -1,9 +1,9 @@
 <div class="container m-6">
-  <div class="title is-4">Select Date:</div>
+  {{! <div class="title is-4">Select Date:</div> }}
   <div class="columns is-centered">
     <div class="column is-half">
       <div class="field">
-        <label class="label">Select Date:</label>
+        <label class="label title is-4">Select Date:</label>
         <div class="control">
           <input type="date" id="select-date" class="input is-centered" />
         </div>
@@ -27,8 +27,11 @@
   <div class="columns is-multiline" id="selected-exercises"></div>
   <div class="columns is-centered">
     <div class="column is-three-quarters">
-      <button id="btn-save" class="button is-success is-fullwidth is-hidden">Save your workout!</button>
+      <button id="btn-save" class="button is-warning is-fullwidth is-hidden"><span class="icon is-small"></span>
+      <i class="fas fa-check"></i>
+    </span>
+    <span> Save your workout!</span></button>
     </div>
   </div>
-  <script src="js/exercise.js"></script>
+  <script src="/js/exercise.js"></script>
 </div>
