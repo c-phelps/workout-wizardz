@@ -1,4 +1,4 @@
-<div class="container m-4">
+<div class="full-width-container m-4">
   {{! loop through each workout and display the exercises as buttons }}
   <div class="title is-3">{{user}}'s exercises</div>
   <div class="columns is-multiline">
@@ -33,9 +33,18 @@
       <header class="modal-card-head">
         <p class="modal-card-title has-text-bold" id="exercise-title"></p>
         <p class="modal-card-title"></p>
+        <button class="card-header-icon" aria-label="more options" id="toggle-card">
+          Exercise details
+          <span class="icon">
+            <i class="fas fa-angle-down" aria-hidden="true" id="toggle-description"></i>
+          </span>
+        </button>
         <button class="delete" aria-label="close"></button>
       </header>
       <section class="modal-card-body">
+        <div>
+          <p id="exercise-description" class="is-hidden"><span class="has-text-weight-bold">Description: </span></p>
+        </div>
         <form id="exercise-form">
           <input type="hidden" id="workout-id" name="workoutId" />
           <input type="hidden" id="exercise-id" name="exerciseId" />

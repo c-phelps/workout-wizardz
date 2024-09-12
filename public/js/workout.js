@@ -16,6 +16,7 @@ $(document).ready(function () {
       } else {
         $("#notes").val("");
       }
+      $("#exercise-description").append(`${exercise.Description}`);
       // activate modal
       $("#exercise-modal").addClass("is-active");
       // pass workout id and exercise id to modal
@@ -86,7 +87,22 @@ $(document).ready(function () {
   // if the button with the class delete (the x on the modal) is clicked
   // close the modal
   $(".delete, .modal-background").on("click", function () {
+    $("#exercise-description").addClass("is-hidden");
     $("#exercise-modal").removeClass("is-active");
+  });
+
+  // some nice to have code for toggling description of exercise
+  $("#toggle-card").on("click", function () {
+    if ($("#exercise-description").hasClass("is-hidden")) {
+      $("#toggle-description").removeClass("fa-angle-down");
+      $("#toggle-description").addClass("fa-angle-up");
+      $("#exercise-description").removeClass("is-hidden");
+    } else {
+      $("#toggle-description").addClass("fa-angle-down");
+      $("#toggle-description").removeClass("fa-angle-up");
+
+      $("#exercise-description").addClass("is-hidden");
+    }
   });
 
   // copied functionality from exercise deletion for workout deletion
