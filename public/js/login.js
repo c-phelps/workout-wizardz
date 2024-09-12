@@ -8,11 +8,11 @@ const login = async () => {
     body: JSON.stringify({ username, password }),
   });
 
+  const errorData = await response.json();
   if (response.ok) {
     // Redirect to the workout page on successful login
     document.location.replace("/api/workout");
   } else {
-    const errorData = await response.json();
     alert(errorData.message); // Show error message from the server
   }
 };
@@ -27,14 +27,13 @@ const signup = async () => {
     body: JSON.stringify({ username, password }),
   });
 
+  const errorData = await response.json();
   if (response.ok) {
     // Redirect to the workout page on successful login
-    document.location.replace("/");
+    document.location.replace("/api/workout");
   } else {
-    const errorData = await response.json();
-    alert(errorData.message); // Show error message from the server
+    alert(errorData.error); // Show error message from the server
   }
-  document.location.replace("/api/workout");
 };
 
 document.querySelector("#login").addEventListener("click", login);

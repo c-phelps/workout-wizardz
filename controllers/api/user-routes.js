@@ -5,7 +5,22 @@ const bcrypt = require("bcrypt");
 
 router.post("/signup", async (req, res) => {
   try {
+    // destructured params
+    const { username, password } = req.body;
+    const findUser = await User.findOne({ where: { username: username } });
+    // some validation to make sure that the 
+    if (findUser) {
+      return res.status(400).json({ error: "Username already exists. Try logging in or select a different username!" });
+    }
+    if (username.length < 1) {
+      return res.status(400).json({ error: "Please enter a username." });
+    }
+    if (password.length < 8) {
+      return res.status(400).json({ error: "Please enter a password that is at least 8 characters long." });
+    }
+
     const userData = await User.create(req.body);
+
     req.session.save(() => {
       req.session.user_id = userData.id;
       req.session.logged_in = true;

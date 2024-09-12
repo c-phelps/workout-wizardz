@@ -40,5 +40,15 @@
     {{/unless}}
     {{{body}}}
   </body>
+  {{#unless boolHomepage}}
+    <footer class="footer has-text-centered">
+      <div class="container">
+        <p class="has-text-warning">
+          &copy; 2024 Workout Wizards. All rights reserved.
+        </p>
+        <a href="https://opensource.org/licenses/MIT" target="_blank" class="has-text-info"> MIT License</a>
+      </div>
+    </footer>
+  {{/unless}}
   <script src="/js/main.js"></script>
 </html>

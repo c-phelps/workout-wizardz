@@ -1,4 +1,4 @@
-<div class="container m-6">
+<div class="full-width-container m-4">
   {{! <div class="title is-4">Select Date:</div> }}
   <div class="columns is-centered">
     <div class="column is-half">
@@ -14,16 +14,24 @@
   <div class="columns is-multiline">
     {{#each muscleGroups}}
       <div class="column is-one-quarter">
-        <button class="muscle-group button is-warning is-fullwidth" data-muscle-group="{{this}}">
+        <button class="muscle-group button is-warning is-fullwidth is-uppercase" data-muscle-group="{{this}}">
           {{this}}
         </button>
       </div>
     {{/each}}
   </div>
-  <div class="title is-4">Exercises for selected muscle group:</div>
+  <div class="title is-4 is-hidden muscle-title">Selected muscle group:</div>
+  <div class="columns is-centered">
+    <div class="column is-flex is-justify-content-center">
+      <figure class="image"  style="width: 25%; height: auto;">
+        <img id="muscle-image" alt="Musclegroup Image" class="is-hidden image" >
+      </figure>
+    </div>
+  </div>
+  <div class="title is-4 is-hidden muscle-title">Exercises:</div>
   <div class="columns is-multiline" id="exercises-list"></div>
   <div class="columns" id="exercise-data"></div>
-  <div class="title is-4">Your exercises for this workout:</div>
+  <div class="title is-4 exercise-title is-hidden">Your exercises for this workout:</div>
   <div class="columns is-multiline" id="selected-exercises"></div>
   <div class="columns is-centered">
     <div class="column is-three-quarters">

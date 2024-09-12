@@ -5,9 +5,14 @@ $(document).ready(async function () {
   const loggedIn = await responseLoggedIn.json();
 
   // array of images to randomly populate homepage
-  images = ["/img/workout-wizard-1.jpg", "/img/workout-wizard-2.jpg"];
+  images = [
+    "/img/workout-wizard-1.jpg",
+    "/img/workout-wizard-2.jpg",
+    "/img/workout-wizard-3.jpg",
+    "/img/workout-wizard-4.jpg",
+  ];
   function getRandomImage() {
-    const randomIndex = Math.floor(Math.random() * 2);
+    const randomIndex = Math.floor(Math.random() * 4);
     return images[randomIndex];
   }
   // set the source to the random image from the function above

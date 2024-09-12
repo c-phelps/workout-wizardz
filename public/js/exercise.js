@@ -12,10 +12,14 @@ $(document).ready(function () {
       // define location for exercise list and exercise data and empty them out
       const exercisesList = $("#exercises-list");
       const exerciseData = $("#exercise-data");
+      const imgMuscle = $("#muscle-image");
       exercisesList.empty();
       exerciseData.empty();
 
       // for each of the values returned create a button element a quarter of the screen wide and append them to the list area
+      $(".muscle-title").removeClass("is-hidden");
+      imgMuscle.removeClass("is-hidden");
+      imgMuscle.attr("src", `/img/${muscleGroup}.jpg`);
       exercises.forEach((exe) => {
         exercisesList.append(`<div class="column is-one-quarter">
           <button class="exercise button is-light is-fullwidth" data-exercise="${exe.Name}">
@@ -69,6 +73,7 @@ $(document).ready(function () {
       const selectedData = $("#selected-exercises");
       const group = exercises.MuscleGroup;
 
+      $(".exercise-title").removeClass("is-hidden");
       strHTML = `<div class="column is-one-quarter"><div class="card">
           <header class="card-header">
             <p class="card-header-title is-centered">${group.toUpperCase()}</p>
@@ -87,10 +92,6 @@ $(document).ready(function () {
     } catch (err) {
       console.error(`Error: ${err}`);
     }
-  });
-
-  $(document).on("click", ".card-footer-item", function () {
-    $(this).closest(".column").remove();
   });
 
   $("#btn-save").on("click", async function () {
