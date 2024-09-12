@@ -5,21 +5,24 @@ const dayjs = require("dayjs");
 
 router.get("/", async (req, res) => {
   try {
-    // const user_name = req.session.user_id; //
-    const user_name = "testuser"; //
-    // ---------------------------------------------------------
-    // find the ID for the user based off of the name
-    const userData = await User.findOne({ where: { username: user_name } });
-    const { id } = userData.get({ plain: true });
+    const user_id = req.session.user_id;
 
+    const userData = await User.findOne({ where: { id: user_id } });
+    // deconstruct the id from the userData
+    const { username } = userData.get({ plain: true });
+
+    // find all workouts and associated exercises where the user_id matches the current user
     const workoutData = await Workout.findAll({
       include: [{ model: Exercise, as: "exercises" }],
       where: {
-        user_id: id,
+        user_id: user_id,
       },
+      order: [["date", "ASC"]],
     });
+    // map the array of workout data to plain readable data
     const workouts = workoutData.map((workout) => workout.get({ plain: true }));
-    res.render("workout", { workouts, user: user_name });
+    // render the workout page with the workouts and user_name
+    res.render("workout", { workouts, user: username });
     // res.json(workouts);
   } catch (error) {
     console.error("Error fetching workouts:", error);
@@ -27,6 +30,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// find a specific workout and include exercise data for that workout
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
@@ -45,22 +49,65 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
-  const { id } = req.params;
-  const updatedWorkoutData = req.body;
+// update by workout/workoutid/exercise/exerciseid
+router.put("/:workoutId/exercise/:exerciseId", async (req, res) => {
+  const { workoutId, exerciseId } = req.params;
+  const { notes } = req.body;
 
   try {
-    const workout = await Workout.findByPk(id);
+    const workoutExercises = await WorkoutExercises.findOne({
+      where: {
+        workout_id: parseInt(workoutId),
+        exercise_id: parseInt(exerciseId),
+      },
+    });
 
-    if (!workout) {
-      return res.status(404).json({ error: "Workout not found" });
+    if (!workoutExercises) {
+      return res.status(404).json({ error: `Workout not found: wo${workoutId} ex${exerciseId}` });
     }
-    await workout.update(updatedWorkoutData);
+
+    await workoutExercises.update({ notes });
 
     res.json({ message: "Workout updated successfully" });
   } catch (error) {
     console.error("Error updating workout:", error);
     res.status(500).json({ error: "An error occurred while updating the workout" });
+  }
+});
+
+// delete specific excercise from a workout/id pair
+router.delete("/:workoutId/exercise/:exerciseId", async (req, res) => {
+  const { workoutId, exerciseId } = req.params;
+  try {
+    // attempt to destroy the value in the junction table with both of the id key
+    const deleted = await WorkoutExercises.destroy({
+      where: {
+        workout_id: parseInt(workoutId),
+        exercise_id: parseInt(exerciseId),
+      },
+    });
+
+    res.json({ message: "Record deleted successfully", deleted });
+  } catch (err) {
+    res.status(500).json({ error: "An error occurred while deleting the exercise" });
+  }
+});
+
+// pretty much copy pasted code from above to relate to a specific workout rather than a workout/id pair
+router.delete("/:id", async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  try {
+    // attempt to destroy the value in the workout table by id
+    const deleted = await Workout.destroy({
+      where: {
+        id: parseInt(id),
+      },
+    });
+
+    res.json({ message: "Record deleted successfully", deleted });
+  } catch (err) {
+    res.status(500).json({ error: "An error occurred while deleting the exercise" });
   }
 });
 
@@ -70,21 +117,10 @@ router.post("/", async (req, res) => {
     // retrieve the date and array of selected exercises
     const { date, exercises } = req.body;
     const formattedDate = dayjs(date).format("MM/DD/YYYY");
-    // set the username to the logged in user - test user for testing data
-    // ---------------------------------------------------------
-    // const user_name = req.session.user_id; //
-    const user_name = "testuser"; //
-    // ---------------------------------------------------------
-    // find the ID for the user based off of the name
-    const userData = await User.findOne({ where: { username: user_name } });
-    const { id } = userData.get({ plain: true });
-    // create a new workout with the information:
-    // date from date/time picker
-    // user from current user
-    // USE TEST USER UNTIL WE HAVE LOGIN THEN REVERT
+    const user_id = req.session.user_id;
     const newWorkout = await Workout.create({
       date: formattedDate,
-      user_id: id,
+      user_id: user_id,
     });
     const exerciseIdsArray = [];
     // loop through exercises and each current exercise will be exercise

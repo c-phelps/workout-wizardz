@@ -18,9 +18,9 @@ const PORT = process.env.PORT || 3001;
 // set the session variables
 const sess = {
   secret: process.env.SECRET,
+  // cookie set for a day
   cookie: {
-    // Stored in milliseconds
-    maxAge: 24 * 60 * 60 * 1000, // expires after 1 day
+    maxAge: 24 * 60 * 60 * 1000, 
   },
   resave: false,
   saveUninitialized: true,
@@ -35,7 +35,7 @@ app.use(session(sess));
 // initialize and store handlebars in a variable
 const hbs = exphbs.create({ helpers });
 
-// Set Handlebars as the default template engine.
+// set Handlebars as the default template engine
 app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 
@@ -43,12 +43,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
-//
+// direct to modular routing
 app.use(routes);
 
-// sync sequelize
+// do not force sync
 sequelize.sync({ force: false }).then(() => {
-  // set the server to listen on the port
+  // log that the server is live
   app.listen(PORT, () =>
     console.log(`\nServer running on port ${PORT}. Visit http://localhost:${PORT} and get started with Workout Wizard!`)
   );

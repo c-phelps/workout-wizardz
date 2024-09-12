@@ -1,51 +1,65 @@
-<div class="title is-3">{{user}}</div>
-<div class="columns is-multiline">
-  {{#each workouts as |workout|}}
-    <div class="column is-one-quarter">
-      <div class="card" data-id="{{workout.id}}">
-        <div class="card-content">
-          <p class="title is-5">{{workout.date}}</p>
-          {{#each workout.exercises as |exercise|}}
-            <div class="exercise">
-              <button class="button is-fullwidth" data-workout-id="{{workout.id}}" data-exercise-id="{{exercise.id}}">
-                {{exercise.Name}}
-              </button>
-            </div>
-          {{/each}}
+<div class="container m-4">
+  {{! loop through each workout and display the exercises as buttons }}
+  <div class="title is-3">{{user}}'s exercises</div>
+  <div class="columns is-multiline">
+    {{#each workouts as |workout|}}
+      <div class="column is-one-quarter">
+        <div class="card" data-id="{{workout.id}}">
+          <div class="card-content">
+            <p class="title is-5 has-text-centered">{{workout.date}}</p>
+            {{#each workout.exercises as |exercise|}}
+              <div class="exercise">
+                <button class="button is-fullwidth" data-workout-id="{{workout.id}}" data-exercise-id="{{exercise.id}}">
+                  {{exercise.Name}}
+                </button>
+              </div>
+            {{/each}}
+          </div>
+          <footer class="card-footer">
+            <button
+              class="card-footer-item has-text-danger has-text-weight-bold btn-delete-workout"
+              data-workout-id="{{workout.id}}"
+            >Delete workout</button>
+          </footer>
         </div>
       </div>
-    </div>
-  {{/each}}
-</div>
+    {{/each}}
+  </div>
 
-<div class="modal" id="exercise-modal">
-  <div class="modal-baground"></div>
-  <div class="modal-card">
-    <header class="modal-card-head">
-      <p class="modal-card-title">Add/Update Exercise</p>
-      <p class="modal-card-title" id="exercise-name"></p>
-      <button class="delete" aria-label="close"></button>
-    </header>
-    <section class="modal-card-body">
-      <form id="exercise-form">
-        <input type="hidden" id="workout-id" name="workoutId" />
-        <input type="hidden" id="exercise-id" name="exerciseId" />
-        <div class="field">
-          <label class="label" for="notes">Notes:</label>
-          <div class="control">
-            <textarea class="textarea" id="notes" name="notes" placeholder="Notes">
-            </textarea>
+  {{! modal for updating exercise notes }}
+  <div class="modal" id="exercise-modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+      <header class="modal-card-head">
+        <p class="modal-card-title has-text-bold" id="exercise-title"></p>
+        <p class="modal-card-title"></p>
+        <button class="delete" aria-label="close"></button>
+      </header>
+      <section class="modal-card-body">
+        <form id="exercise-form">
+          <input type="hidden" id="workout-id" name="workoutId" />
+          <input type="hidden" id="exercise-id" name="exerciseId" />
+          <div class="field">
+            <label class="label" for="notes">Notes:</label>
+            <div class="control">
+              <textarea class="textarea" id="notes" name="notes" placeholder="Notes">
+              </textarea>
+            </div>
           </div>
-        </div>
-        <div class="field">
-          <div class="control">
-            <button class="button is-primary" type="submit">Save</button>
+          <div class="field">
+            <div class="control">
+              <button class="button is-warning" type="submit">Save</button>
+              <button class="button is-danger" id="btn-delete">Delete exercise from workout</button>
+            </div>
           </div>
-        </div>
-      </form>
-    </section>
+        </form>
+      </section>
+    </div>
+  </div>
+  <div class="columns is-centered">
+    <div class="column is-three-quarters">
+      <button class="button is-warning is-fullwidth" id="btn-add-workout">Add New Workout</button>
+    </div>
   </div>
 </div>
-
-<button class="button">Add Workout</button>
-<script src="js/workout.js"></script>
+<script src="/js/workout.js"></script>

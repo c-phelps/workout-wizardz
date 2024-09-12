@@ -13,9 +13,9 @@ Workout.belongsTo(User, {
   foreignKey: "userId",
 });
 // Workouts belong to many Exercises through WorkoutExercises, fk = workout_id
-Workout.belongsToMany(Exercise, { through: "WorkoutExercises", foreignKey: "workout_id", timestamps: false });
+Workout.belongsToMany(Exercise, { through: "workoutexercises", foreignKey: "workout_id", timestamps: false });
 // Exercises belong to many Workouts through WorkoutExercises fk = exercise_id
-Exercise.belongsToMany(Workout, { through: "WorkoutExercises", foreginKey: "exercise_id", timestamps: false });
+Exercise.belongsToMany(Workout, { through: "workoutexercises", foreignKey: "exercise_id", timestamps: false });
 // See ERD for visual relationship data: #19
 
 module.exports = {

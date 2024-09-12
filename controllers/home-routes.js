@@ -4,7 +4,7 @@ const { User } = require("../models");
 router.get("/", async (req, res) => {
   try {
     res.render("homepage", {
-      is_homepage: true,
+      boolHomepage: true,
       logged_in: req.session.logged_in,
     });
   } catch (err) {
@@ -13,11 +13,10 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/login", (req, res) => {
-  if (req.session.logged_in) {
-    res.redirect("api/workouts");
-    return;
-  }
-
+  // if (req.session.logged_in) {
+  //   // res.redirect("api/workout");
+  //   return;
+  // }
   res.render("login");
 });
 

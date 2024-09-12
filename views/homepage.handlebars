@@ -1,7 +1,20 @@
-<section class="hero is-medium is-primary is-bold">
+<section class="hero is-small is-warning is-bold">
   <div class="hero-body">
     <div class="container">
-      <p class="title">A Web Application Where You Can Track Your Everyday Workout Routines.</p>
+      <div class="columns is-vcentered">
+        <div class="column is-two-thirds">
+          <p class="title">
+            A Web Application Where You Can Track Your Everyday Workout Routines.
+          </p>
+          <p class="subtitle">
+            Start at your own pace. Customize and develop routines that work for you. Make notes on exercises that you enjoy. Choose exercises by the target muscle group. Track past exercises in the workout's calendar.
+          </p>
+        </div>
+        <div class="column is-one-third">
+          <figure class="image">
+            <img id="random-image" alt="Workout Image">
+          </figure>
+        </div>
     </div>
   </div>
 </section>
@@ -11,25 +24,10 @@
 
     {{#if logged_in}}
       <p>Welcome back! Check out your latest workout routines.</p>
+      <a href="/api/workout" class="button is-warning">Continue</a>
     {{else}}
       <p>Please log in to track your workouts.</p>
-      <a href="/login" class="button is-primary">Login</a>
+      <a href="/login" class="button is-warning">Get your wizard on</a>
     {{/if}}
-
-    <section class="posts">
-
-      {{#if posts.length}}
-        {{#each posts}}
-          <article class="box">
-            <h2 class="title is-4">{{this.title}}</h2>
-            <p>{{this.content}}</p>
-            <a href="/post/{{this.id}}" class="button is-link">Read more</a>
-          </article>
-        {{/each}}
-      {{else}}
-        <p class="has-text-centered">No posts available at the moment. Please check back later.</p>
-      {{/if}}
-    </section>
-
   </div>
 </main>
